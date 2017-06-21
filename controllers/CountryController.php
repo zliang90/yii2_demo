@@ -29,7 +29,7 @@ class CountryController extends Controller
             ->all();
 
         return $this->render("index", [
-            'country' => $countries,
+            'countries' => $countries,
             'pagination' => $pagination,
         ]);
     }
