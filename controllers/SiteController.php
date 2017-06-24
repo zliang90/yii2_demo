@@ -2,14 +2,21 @@
 
 namespace app\controllers;
 
+use app\models\LoginForm;
 use app\models\EntryForm;
+use app\models\MyUser;
+use app\models\RegistrationForm;
+use app\models\UploadImageForm;
+use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;
+use yii\debug\models\timeline\DataProvider;
+use yii\web\UploadedFile;
+use app\models\ContactForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 
 class SiteController extends Controller
 {
@@ -137,14 +144,135 @@ class SiteController extends Controller
         ]);
     }
 
+    /**
+     * Display entry
+     * @return string
+     */
     public function actionEntry()
     {
         $model = new EntryForm;
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             return $this->render("entry-confirm", ["model" => $model]);
-        } else {
-            return $this->render("entry", ["model" => $model]);
         }
+        return $this->render("entry", ["model" => $model]);
+    }
+
+    /**
+     * 小部件测试
+     * @return string
+     */
+    public function actionTestWidget()
+    {
+        return $this->render("testWidget");
+    }
+
+    /**
+     * 响应一个json类型的字符串
+     * @return Response
+     */
+    public function actionTest()
+    {
+//        第一种方法：
+        /*Yii::$app->response->format = yii\web\Response::FORMAT_JSON;
+        return [
+            'id' => 1,
+            'name' => 'Hippo',
+            'age' => 28,
+            'country' => 'China',
+            'city' => 'BeiJing'
+        ];*/
+
+//        第二种方法：
+        return $this->asJson([
+            'id' => 1,
+            'name' => 'Hippo',
+            'age' => 28,
+            'country' => 'China',
+            'city' => 'BeiJing'
+        ]);
+    }
+
+    /**
+     * 维护页面
+     */
+
+    public function actionMaintenance()
+    {
+        echo '<h1>系统正在维护中...</h1>';
+    }
+
+    public function actionRegistration()
+    {
+        $mRegistration = new RegistrationForm;
+
+        return $this->render('registration', ['model' => $mRegistration]);
+    }
+
+    public function actionShowFlash()
+    {
+        $session = Yii::$app->session;
+
+        // set a flash meaage name as "greeting"
+        $session->setFlash('greeting', 'Hello World!');
+
+        return $this->render("showflash");
+    }
+
+    /**
+     * 图片上传
+     * @return string
+     */
+    public function actionUploadImage()
+    {
+        $model = new UploadImageForm;
+
+        if (Yii::$app->request->isPost) {
+            $model->image = UploadedFile::getInstance($model, 'image');
+
+            if ($model->upload()) {
+                // file is uploaded Successfully
+                echo "File successfully uploaded";
+
+            }
+        }
+        return $this->render("upload", ['model' => $model]);
+    }
+
+    public function actionDataProvider()
+    {
+        // ActiveDataProvider
+/*        $query = MyUser::find();
+        $provider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 2,
+            ],
+        ]);
+        // returns an array of users objects
+        $users = $provider->getModels();
+        var_dump($users);*/
+
+
+        $count = Yii::$app->db->createCommand('SELECT COUNT(1) FROM user')->queryScalar();
+
+        $provider = new SqlDataProvider([
+            'sql' => 'SELECT * FROM user',
+            'totalCount' => $count,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+            'sort' => [
+                'attributes' => [
+                    'id',
+                    'name',
+                    'email',
+                ],
+            ],
+        ]);
+
+        // returns json string of data rows
+        $users = $provider->getModels();
+        return $this->asJson($users);
     }
 }

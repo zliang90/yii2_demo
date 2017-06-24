@@ -7,6 +7,10 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+
+    // 捕获所有路由，进入维护模式
+    // 'catchAll' => ['site/maintenance'],
+
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -39,14 +43,14 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
+
+        // 默认urlManager注释
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

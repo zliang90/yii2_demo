@@ -13,13 +13,29 @@ use yii\widgets\LinkPager;
 
     <h1>Countries</h1>
 
-    <ul>
+    <table class="table table-hover">
+        <caption></caption>
+        <thead>
+        <tr>
+            <?php foreach (array_keys($sort->attributes) as $field): ?>
+                <th> <?= $sort->link($field); ?> </th>
+            <?php endforeach; ?>
+        </tr>
+        </thead>
+        <tbody>
         <?php foreach ($countries as $country): ?>
-            <li>
-                <?= Html::encode("{$country->name} ({$country->code})") ?>
-                <?= $country->population ?>
-            </li>
+            <tr>
+                <td><?= $country->code ?></td>
+                <td><?= $country->name ?></td>
+                <td><?= $country->population ?></td>
+                <td>
+                    <?= Html::button('修改', ['class' => 'btn btn-sm']) ?>
+                    <?= Html::button('删除', ['class' => 'btn btn-sm']) ?>
+                    <!--                    <button class="btn btn-sm">修改</button>&nbsp;<button class="btn btn-sm">删除</button>-->
+                </td>
+            </tr>
         <?php endforeach; ?>
-    </ul>
+        </tbody>
+    </table>
 
 <?= LinkPager::widget(['pagination' => $pagination]); ?>
