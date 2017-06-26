@@ -280,4 +280,22 @@ class SiteController extends Controller
         return Yii::$app->id;
     }
 
+    /**
+     * 简单随机字符串生成
+     * @param int $length
+     * @return string
+     */
+    public function actionRandString($length=8) {
+        $str = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $max = len($str) - 1;
+
+        $result = '';
+
+        for( $i=0; i < $length; $i++) {
+            $result += $str[rand(0,$max)];
+        }
+
+        return $result;
+    }
+
 }
