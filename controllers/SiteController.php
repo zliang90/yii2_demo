@@ -275,4 +275,9 @@ class SiteController extends Controller
         $users = $provider->getModels();
         return $this->asJson($users);
     }
+
+    public function actionId() {
+        return Yii::$app->id;
+    }
+
 }
