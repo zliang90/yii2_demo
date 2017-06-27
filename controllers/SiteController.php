@@ -301,4 +301,13 @@ class SiteController extends Controller
         return $result;
     }
 
+    /**
+     * 返回跳转Response对象
+     * @return Response
+     */
+    public function actionForward() {
+        return $this->redirect('/country/index');
+    }
+
+
 }

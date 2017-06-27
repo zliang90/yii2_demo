@@ -8,7 +8,9 @@
 
 namespace app\components;
 
-class ActionHello extends \yii\base\Action {
+use yii\base\Action;
+
+class ActionHello extends Action {
     public function run() {
         return 'Hello World';
     }
