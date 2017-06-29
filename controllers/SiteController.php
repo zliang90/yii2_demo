@@ -244,7 +244,7 @@ class SiteController extends Controller
 
     public function actionDataProvider()
     {
-        // ActiveDataProvider
+        // 第1种：ActiveDataProvider
 /*        $query = MyUser::find();
         $provider = new ActiveDataProvider([
             'query' => $query,
@@ -257,6 +257,7 @@ class SiteController extends Controller
         var_dump($users);*/
 
 
+        // 第2种：SqlDataProvider
         $count = Yii::$app->db->createCommand('SELECT COUNT(1) FROM user')->queryScalar();
 
         $provider = new SqlDataProvider([
