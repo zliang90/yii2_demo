@@ -27,4 +27,8 @@ class HelloController extends Controller
     {
         echo $message . "\n";
     }
+
+    public function actionSay($message = 'hello world') {
+        echo $message . "\n";
+    }
 }
