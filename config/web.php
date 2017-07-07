@@ -7,8 +7,11 @@ $config = [
     'id' => 'yii2_demo',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'timeZone' => 'Asia/Chongqing',
+    'timeZone'       => 'Asia/Shanghai',
+    'language'       => 'zh-CN',
+    'sourceLanguage' => 'en-US',
     'charset' => 'UTF-8',
+    'name' => 'YII2测试demo',
 
     // 捕获所有路由，进入维护模式
     // 'catchAll' => ['site/maintenance'],
