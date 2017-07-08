@@ -10,6 +10,7 @@ use app\models\UploadImageForm;
 use yii\data\ActiveDataProvider;
 use yii\data\SqlDataProvider;
 use yii\debug\models\timeline\DataProvider;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\UploadedFile;
 use app\models\ContactForm;
 use Yii;
@@ -290,13 +291,20 @@ class SiteController extends Controller
      * @return string
      */
     public function actionRandString($length=8) {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (Yii::$app->request->method != 'POST') {
+
+            throw new MethodNotAllowedHttpException("Method Not Allowed", 1000405);
+        }
+
         $str = 'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $max = len($str) - 1;
+        $max = strlen($str) - 1;
 
         $result = '';
 
-        for( $i=0; i < $length; $i++) {
-            $result += $str[rand(0,$max)];
+        for( $i=0; $i < $length; $i++) {
+            $result .= $str[rand(0,$max)];
         }
 
         return $result;

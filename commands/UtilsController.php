@@ -37,4 +37,45 @@ class UtilsController extends Controller
         echo $rand_pass;
     }
 
+    public function actionHttpRequest($url, $method = '', $data = '', $timeout = 30)
+    {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);  //获取内容url
+        curl_setopt($curl, CURLOPT_HEADER, false);  //获取http头信息
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);//返回数据流，不直接输出
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);  //超时时长，单位秒
+
+        // 判断请求类型
+        switch ($method) {
+            case "POST":
+                curl_setopt($curl, CURLOPT_POST, true);
+                curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                        'Content-Type: application/json; charset=utf-8',
+                        'Content-Length: ' . strlen($data))
+                );
+
+                if (!empty($data)) {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+                }
+                break;
+            case "PUT":
+                curl_setopt($curl, CURLOPT_PUT, true);
+                break;
+        }
+
+
+        $result = [];
+
+        try {
+            $result['data'] = trim(curl_exec($curl));
+            $result['status'] = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        } catch (Exception $e) {
+            $result['message'] = $e->getMessage();
+        } finally {
+            curl_close($curl);
+        }
+
+        echo json_encode($result);
+    }
+
 }
