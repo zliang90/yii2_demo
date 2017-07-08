@@ -28,7 +28,7 @@ class UtilsController extends Controller
      */
     public function actionRandStr2($length = 8)
     {
-        $str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $str = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $rand_pass = '';
         for ($i = 0; $i < $length; $i++) {
             $rand_pass .= $str[mt_rand(0, strlen($str) - 1)];
