@@ -40,7 +40,7 @@ class UtilsController extends Controller
     public function actionHttpRequest($url, $method = '', $data = '', $timeout = 30)
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);  //获取内容url
+        curl_setopt($curl, CURLOPT_URL, $url);      //获取内容url
         curl_setopt($curl, CURLOPT_HEADER, false);  //获取http头信息
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);//返回数据流，不直接输出
         curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);  //超时时长，单位秒
