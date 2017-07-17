@@ -51,8 +51,9 @@ $config = [
 
         // 默认urlManager注释
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
+            'enablePrettyUrl'     => true,
+            'showScriptName'      => false,
+            'enableStrictParsing' => false,
             'rules' => [
             ],
         ],
