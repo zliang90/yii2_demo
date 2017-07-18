@@ -223,7 +223,7 @@ class SiteController extends Controller
         return $this->render("showflash");
     }
 
-    /**
+    /*
      * 图片上传
      * @return string
      */
@@ -242,6 +242,7 @@ class SiteController extends Controller
         }
         return $this->render("upload", ['model' => $model]);
     }
+
 
     public function actionDataProvider()
     {
@@ -285,7 +286,7 @@ class SiteController extends Controller
         return Yii::$app->id;
     }
 
-    /**
+    /*
      * 简单随机字符串生成
      * @param int $length
      * @return string

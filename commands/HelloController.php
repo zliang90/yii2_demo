@@ -57,4 +57,5 @@ class HelloController extends Controller
 
         echo json_encode($users);
     }
+
 }
